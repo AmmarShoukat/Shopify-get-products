@@ -1,0 +1,102 @@
+<div class="nws_best_seller">
+        <div class="container">
+          <div class="head_info">
+              <h2 class="amr_head_title">{{ section.settings.seller_head }}</h2>
+              <div class="amr_desc">{{ section.settings.seller_desc }}</div>
+          </div>
+          <div class="best_seller_row cust_top_pad">
+            {% for block in section.blocks %}
+              <div class="nws_product_grid">
+                {% assign selected_product = block.settings.product %}
+              <a href={{ selected_product.url }}>
+                {% if selected_product.featured_image !=blank %}
+                  <img loading="lazy" class="best_prod_img" src="{{ selected_product.featured_image | img_url: 'master' }}"/>
+                  {% else %}
+                  <img loading="lazy" class="best_prod_img" src="{{ block.settings.product_img | img_url: 'master' }}"/>
+                {% endif %}
+              </a>
+                <div class="nws_product_content">
+                  <div class="cust_content_height">
+                  <div class="product_review">
+                    <img class="star_rating" src="https://cdn.shopify.com/s/files/1/0534/7065/8731/files/star_2x_043b030c-1539-440c-8519-55a34388de69.png"/>
+                    <img class="star_rating" src="https://cdn.shopify.com/s/files/1/0534/7065/8731/files/star_2x_043b030c-1539-440c-8519-55a34388de69.png"/>
+                    <img class="star_rating" src="https://cdn.shopify.com/s/files/1/0534/7065/8731/files/star_2x_043b030c-1539-440c-8519-55a34388de69.png"/>
+                    <img class="star_rating" src="https://cdn.shopify.com/s/files/1/0534/7065/8731/files/star_2x_043b030c-1539-440c-8519-55a34388de69.png"/>
+                    <img class="star_rating" src="https://cdn.shopify.com/s/files/1/0534/7065/8731/files/star_2x_043b030c-1539-440c-8519-55a34388de69.png"/>  
+                  </div>
+                  {% if block.settings.product_name != blank %}
+                    <h2 class="amr_product_head">{{ block.settings.product_name }}</h2>
+                  {% else %}
+                    <h2 class="amr_product_head">{{ selected_product.title }}</h2>
+                  {% endif %}
+                  <div class="entry-price price">
+                     <del class="ComparePrice-{{product_id}}">
+                      {% if selected_product.compare_at_price !=blank %}
+                      {{- selected_product.compare_at_price | default: 0 | money -}}
+                      {% endif%}
+                    </del>
+                    <ins class="ProductPrice-{{product_id}}">
+                      {{- selected_product.price | money -}}
+                    </ins>
+                  </div>
+                  </div>
+                  <a class="amr_btn_bg" href="{{ selected_product.url }}">{{ block.settings.btn_txt }}</a>
+              </div>
+           
+          </div>  
+               {% endfor %}
+        </div>  
+      </div>
+     </div> 
+
+{% schema %}
+  {
+    "name": "Best Seller",
+    "settings": [
+        {
+          "type": "text",
+          "id": "seller_head",
+          "label":"Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "seller_desc",
+          "label":"Description"
+        }
+    ],
+    "blocks": [
+    {
+      "type": "text",
+      "name": "Best Selling Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label":"Select Prodcut"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_img",
+          "label":"Product Image"
+        },
+        {
+          "type": "text",
+          "id": "product_name",
+          "label":"Product Name"
+        },
+        {
+          "type": "text",
+          "id": "btn_txt",
+          "label":"Button Text"
+        }
+      ]
+    }
+  ],
+    "presets": [
+      {
+        "name": "Best Seller",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}
